@@ -1129,6 +1129,18 @@
 		end
 		settings['FRAMEWORK_SEARCH_PATHS'] = cfg.frameworkdirs
 
+		local metalincludedirs = project.getrelative(cfg.project, cfg.metalincludedirs)
+		for i,v in ipairs(metalincludedirs) do
+			cfg.metalincludedirs[i] = p.quoted(v)
+		end
+		settings['MTL_HEADER_SEARCH_PATHS'] = cfg.metalincludedirs
+
+		local escapedMetalDefines = { }
+		for i,v in ipairs(cfg.metaldefines) do
+			escapedMetalDefines[i] = escapeArg(v)
+		end
+		settings['MTL_PREPROCESSOR_DEFINITIONS'] = escapedMetalDefines
+
 		local objDir = path.getrelative(tr.project.location, cfg.objdir)
 		settings['OBJROOT'] = objDir
 
