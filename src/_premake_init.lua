@@ -693,6 +693,20 @@
 	}
 
 	api.register {
+		name = "metalincludedirs",
+		scope = "config",
+		kind = "list:directory",
+		tokens = true,
+	}
+
+	api.register {
+		name = "metaldefines",
+		scope = "config",
+		kind = "list:string",
+		tokens = true,
+	}
+
+	api.register {
 		name = "intrinsics",
 		scope = "config",
 		kind = "boolean"

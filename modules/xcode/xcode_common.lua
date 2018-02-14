@@ -40,6 +40,7 @@
 			[".icns"] = "Resources",
 			[".s"] = "Sources",
 			[".S"] = "Sources",
+			[".metal"] = "Sources",
 		}
 		if node.isResource then
 			return "Resources"
@@ -126,6 +127,7 @@
 			[".bmp"]       = "image.bmp",
 			[".wav"]       = "audio.wav",
 			[".xcassets"]  = "folder.assetcatalog",
+			[".metal"]     = "sourcecode.metal",
 
 		}
 		return types[path.getextension(node.path)] or "text"
@@ -1126,6 +1128,18 @@
 			cfg.frameworkdirs[i] = p.project.getrelative(cfg.project, cfg.frameworkdirs[i])
 		end
 		settings['FRAMEWORK_SEARCH_PATHS'] = cfg.frameworkdirs
+
+		local metalincludedirs = project.getrelative(cfg.project, cfg.metalincludedirs)
+		for i,v in ipairs(metalincludedirs) do
+			cfg.metalincludedirs[i] = p.quoted(v)
+		end
+		settings['MTL_HEADER_SEARCH_PATHS'] = cfg.metalincludedirs
+
+		local escapedMetalDefines = { }
+		for i,v in ipairs(cfg.metaldefines) do
+			escapedMetalDefines[i] = escapeArg(v)
+		end
+		settings['MTL_PREPROCESSOR_DEFINITIONS'] = escapedMetalDefines
 
 		local objDir = path.getrelative(tr.project.location, cfg.objdir)
 		settings['OBJROOT'] = objDir
